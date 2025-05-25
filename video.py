@@ -4,14 +4,15 @@ import cv2
 import mediapipe as mp
 from rubik_solver import utils
 
-from src.detect import detect_cube, fetch_colors, cube_dict_to_cube_str
+from src.fetch import fetch_colors
+from src.detect import detect_cube
 from utils import make_hex_points, make_bounding_box_points, make_facelet_points
 
-## useful colors
+## colors
+BLUE = (255, 0, 0)
+GREEN = (0, 255, 0)
 RED = (0, 0, 255)
 YELLOW = (0, 255, 255)
-GREEN = (0, 255, 0)
-BLUE = (255, 0, 0)
 
 def main():
     # Start webcam video capture
@@ -24,8 +25,9 @@ def main():
     offset_x = 1000
     offset_y = 525
 
-    seen = 0
 
+    seen = 0
+    guide_str = '\'c\' to capture, \'q\' to quit, \'r\' to restart, \'wasd\' to scale and move'
     default_str = '????y????????b????????r????????g????????o????????w????'
     cube_str = default_str
 
@@ -55,45 +57,39 @@ def main():
 
         # Display prediction on the frame
         # cube_str = cube_dict_to_cube_str(cube_dict=cube_dict)
-        cv2.putText(frame, f"cube_str: {cube_str[:27]} | {cube_str[27:]}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
+        cv2.putText(frame, f"{guide_str}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
+        cv2.putText(frame, f"cube_str: {cube_str[:27]} | {cube_str[27:]}", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
 
         # solve cube if seen two axes and no unknown colors
         if seen == 2 and '?' not in cube_str:
             sol_str = utils.solve(cube_str, 'Kociemba')
-            cv2.putText(frame, f"Solution: {sol_str}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
-            seen = 0
+            cv2.putText(frame, f"Solution: {sol_str}", (10, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, GREEN, 2)
         
-        # Show the video with predictions
+        # show the video with predictions
         cv2.imshow("CubeSolver", frame)
 
-        # Check for key presses
+        # check for key presses
         key = cv2.waitKey(1) & 0xFF
-        if key == ord('q'):  # Quit on 'q'
+        if key == ord('q'):  # q for quit
             break
-        elif key == ord('w'):
+        elif key == ord('w'): # w for scale up
             scale *= 1.1
-        elif key == ord('s'):
+        elif key == ord('s'): # s for scale down
             scale *= 0.9
-        elif key == ord('d'):
-            offset_x -= 10
-        elif key == ord('a'):
+        elif key == ord('d'): # d for move left
             offset_x += 10
-        elif key == ord('c'): # NOTE debug feature, assumes rubiks cube detected
+        elif key == ord('a'): # a for move right
+            offset_x -= 10
+        elif key == ord('r'): # r for restart
+            cube_str = default_str
+            seen = 0
+        elif key == ord('c'): # c for capture
             cube_str, seen = fetch_colors(
                 frame=frame, 
                 facelet_points=facelet_points, 
                 cube_str=cube_str, 
                 seen=seen
             )
-        elif key == ord(' '):
-            if input_frame is not None:
-                img_path = os.path.join("images", input("Specify image filename to save as: "))
-                if "exit" in img_path:
-                    continue
-                cv2.imwrite(img_path, frame)
-                print(f"Saved hand ROI to {img_path}.")
-            else:
-                print("No hand ROI to save.")
 
     # Release resources and destory the window
     cap.release()

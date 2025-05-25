@@ -1,4 +1,11 @@
+# NOTE old functions that may be useful idk
 
+# 
+def cube_dict_to_cube_str(cube_dict: dict):
+    return_str = ''
+    for side_str in cube_dict.values():
+        return_str += side_str
+    return return_str
 
 # 
 def identify_face_colors(frame: np.array, face: list):
@@ -37,3 +44,48 @@ def fetch_colors():
 
         # 
         print(cube_dict)
+
+
+
+# frame face colors make face string
+def make_face_str(face_num:int, seen: int):
+    # yah ik this is bad but I can't figure out better
+    face_str = ''
+    # face_num == 0 is top face
+    
+    if face_num == 0 and seen == 0:
+        face_str += face_colors[0]
+        face_str += face_colors[1]
+        face_str += face_colors[2]
+        face_str += face_colors[3]
+        face_str += face_colors[4]
+        face_str += face_colors[5]
+        face_str += face_colors[6]
+        face_str += face_colors[7]
+        face_str += face_colors[8]
+
+    # face_num == 1 is right face
+    if face_num == 1 and seen == 0:
+        face_str += face_colors[0]
+        face_str += face_colors[1]
+        face_str += face_colors[2]
+        face_str += face_colors[3]
+        face_str += face_colors[4]
+        face_str += face_colors[5]
+        face_str += face_colors[6]
+        face_str += face_colors[7]
+        face_str += face_colors[8]
+
+    # face_num == 2 is left face
+    if face_num == 2 and seen == 0:
+        face_str += face_colors[0]
+        face_str += face_colors[1]
+        face_str += face_colors[2]
+        face_str += face_colors[3]
+        face_str += face_colors[4]
+        face_str += face_colors[5]
+        face_str += face_colors[6]
+        face_str += face_colors[7]
+        face_str += face_colors[8]
+
+    return face_str
