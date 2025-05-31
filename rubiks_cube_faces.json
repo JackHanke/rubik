@@ -1,0 +1,139 @@
+[
+    {
+        "center": {
+            "centroid": [
+                896,
+                537
+            ],
+            "area": 17910.5,
+            "color": "red",
+            "mean_hsv": [
+                10.97,
+                216.48,
+                223.44
+            ]
+        },
+        "neighbors": [
+            {
+                "centroid": [
+                    1069,
+                    535
+                ],
+                "area": 19787.5,
+                "color": {
+                    "label": "orange",
+                    "mean_hsv": [
+                        24.05,
+                        219.98,
+                        229.19
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    888,
+                    359
+                ],
+                "area": 19673.0,
+                "color": {
+                    "label": "red",
+                    "mean_hsv": [
+                        11.0,
+                        213.28,
+                        225.24
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    899,
+                    716
+                ],
+                "area": 17890.0,
+                "color": {
+                    "label": "white",
+                    "mean_hsv": [
+                        29.96,
+                        27.63,
+                        230.32
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    716,
+                    541
+                ],
+                "area": 19351.5,
+                "color": {
+                    "label": "blue",
+                    "mean_hsv": [
+                        102.77,
+                        45.13,
+                        217.24
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    1058,
+                    365
+                ],
+                "area": 19195.0,
+                "color": {
+                    "label": "orange",
+                    "mean_hsv": [
+                        24.12,
+                        218.94,
+                        228.7
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    1072,
+                    707
+                ],
+                "area": 19734.5,
+                "color": {
+                    "label": "yellow",
+                    "mean_hsv": [
+                        31.91,
+                        198.84,
+                        234.09
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    724,
+                    715
+                ],
+                "area": 21042.5,
+                "color": {
+                    "label": "yellow",
+                    "mean_hsv": [
+                        31.93,
+                        197.76,
+                        234.07
+                    ]
+                }
+            },
+            {
+                "centroid": [
+                    714,
+                    367
+                ],
+                "area": 18313.5,
+                "color": {
+                    "label": "blue",
+                    "mean_hsv": [
+                        103.56,
+                        44.09,
+                        220.59
+                    ]
+                }
+            }
+        ]
+    }
+]

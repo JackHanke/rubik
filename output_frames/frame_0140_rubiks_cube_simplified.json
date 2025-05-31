@@ -1,0 +1,69 @@
+[
+    {
+        "center": {
+            "centroid": [
+                788,
+                628
+            ],
+            "color": "white"
+        },
+        "neighbors": [
+            {
+                "centroid": [
+                    779,
+                    436
+                ],
+                "color": "green"
+            },
+            {
+                "centroid": [
+                    980,
+                    617
+                ],
+                "color": "orange"
+            },
+            {
+                "centroid": [
+                    594,
+                    643
+                ],
+                "color": "green"
+            },
+            {
+                "centroid": [
+                    805,
+                    822
+                ],
+                "color": "green"
+            },
+            {
+                "centroid": [
+                    966,
+                    431
+                ],
+                "color": "green"
+            },
+            {
+                "centroid": [
+                    588,
+                    453
+                ],
+                "color": "blue"
+            },
+            {
+                "centroid": [
+                    615,
+                    832
+                ],
+                "color": "green"
+            },
+            {
+                "centroid": [
+                    992,
+                    809
+                ],
+                "color": "blue"
+            }
+        ]
+    }
+]
