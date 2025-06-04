@@ -1,0 +1,9 @@
+For config_1/cube.MOV :: 
+
+With white up axis and green toward axis, the scramble is: 
+
+L2 F2 U L2 D' B2 R2 D2 B2 L2 B D2 L D' R' D' B D L2 U' R2 U'
+
+And the cube string is:
+
+grobywwwbrorwbyrrobrobroywywogggboyywyyrobrywbgggwoggb

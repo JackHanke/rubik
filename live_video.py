@@ -1,0 +1,119 @@
+# system imports
+import os
+import cv2
+import numpy as np
+import mediapipe as mp
+from rubik_solver import utils
+
+# local imports
+from src.fetch import fetch_colors
+from src.detect import detect_side
+from utils import make_hex_points, make_bounding_box_points, make_facelet_points
+
+
+## colors for superimposing things
+BLUE = (255, 0, 0)
+GREEN = (0, 255, 0)
+RED = (0, 0, 255)
+YELLOW = (0, 255, 255)
+
+#
+
+def main():
+    # Start webcam video capture
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        raise RuntimeError("Error: Could not open webcam.")
+    print("Press 'q' to quit.")
+
+    scale = 250
+    offset_x = 1000
+    offset_y = 525
+
+
+    seen = 0
+    guide_str = '\'c\' to capture, \'q\' to quit, \'r\' to restart, \'wasd\' to scale and move'
+    default_str = '????y????????b????????r????????g????????o????????w????'
+    cube_str = default_str
+
+    saved_colors = set()
+
+    frame_counter = 0
+    check_every = 1
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Failed to capture frame.")
+            break
+
+        frame_counter += 1
+
+        # 
+        # hex_points = make_hex_points(scale=scale, offset_x=offset_x, offset_y=offset_y)
+        # bounding_box_points = make_bounding_box_points(scale=scale, offset_x=offset_x, offset_y=offset_y)
+        # facelet_points = make_facelet_points(scale=scale, offset_x=offset_x, offset_y=offset_y)
+
+        if frame_counter >= check_every:
+            # reset frame counter
+            frame_counter = 0
+
+            # detect side of cube
+            status_color = detect_side(frame=frame, saved_colors=saved_colors)
+
+        # 
+        # cv2.polylines(frame, np.array([hex_points]), True, status_color, 5)
+        # cv2.circle(frame, (offset_x, offset_y), 5, status_color, 10)
+        # # cv2.polylines(frame, np.array([bounding_box_points]), True, GREEN, 5)
+        # for point in facelet_points:
+        #     cv2.circle(img=frame, center=point, radius=5, color=BLUE, thickness=2)
+
+        # Display prediction on the frame
+        # cube_str = cube_dict_to_cube_str(cube_dict=cube_dict)
+        # cv2.putText(frame, f"{guide_str}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
+        # cv2.putText(frame, f"cube_str: {cube_str[:27]} | {cube_str[27:]}", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
+
+        # solve cube if seen two axes and no unknown colors
+        if seen == 2 and '?' not in cube_str:
+            # get instructions from solver
+            instructions_list = utils.solve(cube_str, 'Kociemba')
+            # format instructions as string
+            sol_str = ''
+            for move in instructions_list:
+                sol_str +=  move + ' '
+            # superimpose text onto screen
+            cv2.putText(frame, f"Instructions: {sol_str}", (10, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, GREEN, 2)
+        
+        # show the video with predictions
+        cv2.imshow("CubeSolver", frame)
+
+        # check for key presses
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):  # q for quit
+            break
+        elif key == ord('w'): # w for scale up
+            scale *= 1.1
+        elif key == ord('s'): # s for scale down
+            scale *= 0.9
+        elif key == ord('d'): # d for move left
+            offset_x += 10
+        elif key == ord('a'): # a for move right
+            offset_x -= 10
+        elif key == ord('r'): # r for restart
+            cube_str = default_str
+            seen = 0
+        elif key == ord('c'): # c for capture
+            # cube_str, seen = fetch_colors(
+            #     frame=frame, 
+            #     facelet_points=facelet_points, 
+            #     cube_str=cube_str, 
+            #     seen=seen
+            # )
+            pass
+
+    # Release resources and destory the window
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
