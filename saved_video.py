@@ -26,6 +26,7 @@ color_map = {
 
 
 # given video on disk at video_path, obtain cube info and save to json
+# NOTE deprecated
 def main(video_path, target_frame=10):
     cap = cv2.VideoCapture(video_path)
 
@@ -53,7 +54,7 @@ def main(video_path, target_frame=10):
     visualize_results(hsv_mask, contour_overlay)
 
 
-#
+# process a single frame, save plots
 def process_frame(frame, frame_idx, output_dir, saved_colors):
     img = frame
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -176,16 +177,24 @@ if __name__ == "__main__":
     # print(f'Solving cube from video at: {video_file_path}')
 
     # process video frames
+    print(f'Processing video frames at: {video_file_path}')
     process_video_frames(video_path=video_file_path)
+
 
     # format cube string for Kociemba solver
     cube_str = frame_data_to_string()
+    debug_str = cube_str[0:9] + ' ' + cube_str[9:18] + ' ' + cube_str[18:27] + ' ' + cube_str[27:36] + ' ' + cube_str[36:45] + ' ' + cube_str[45:54]
+    # print(debug_str)
 
     BLUE = '\033[94m'
     ENDC = '\033[0m'
 
     # compute optimal instructions
-    instructions = utils.solve(cube_str, 'Kociemba')[1:-1]
+    instructions = utils.solve(cube_str, 'Kociemba')
+    instructions_str = str(instructions)[1:-1]
+
     print('-'*50)
-    print(f'\nInstructions: {BLUE}{instructions}{ENDC}\n')
+    print(f'\nPlease hold the cube with the red center facing you and the yellow center facing up.\n')
+    print('-'*50)
+    print(f'\nInstructions: {BLUE}{instructions_str}{ENDC}\n')
     print('-'*50)

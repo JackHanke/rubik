@@ -99,7 +99,7 @@ def frame_data_to_string():
 
     return cube_str
 
-# 
+# NOTE deprecated 
 def reorder_faces_for_solver(color_string):
     if len(color_string) != 54:
         raise ValueError("Color string must be 54 characters.")

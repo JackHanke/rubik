@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 
+## NOTE deprecated
+
 # from https://stackoverflow.com/questions/36817133/identifying-the-range-of-a-color-in-hsv-using-opencv
 color_dict_HSV = {
     'black': [[180, 255, 30], [0, 0, 0]],
